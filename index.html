@@ -73,7 +73,7 @@ button,.linkbtn{border:1px solid var(--gold);background:#80603a;color:white;padd
     <button id="musicBtn" type="button">♫ Musiqani yoqish</button>
     <button class="secondary" id="shareBtn" type="button">Taklifnomani ulashish</button>
   </div>
-  <audio id="music" loop preload="none">
+  <audio id="music" autoplay loop preload="auto">
     <!-- O'zingizga tegishli yoki foydalanishga ruxsat berilgan MP3 faylni music.mp3 nomi bilan shu papkaga qo'ying. -->
     <source src="music.mp3" type="audio/mpeg">
   </audio>
@@ -93,6 +93,16 @@ function tick(){
 }
 tick();setInterval(tick,1000);
 const audio=document.getElementById('music'), musicBtn=document.getElementById('musicBtn');
+audio.volume = 0.7;
+
+window.addEventListener('load', async () => {
+  try {
+    await audio.play();
+    musicBtn.textContent = '♫ Musiqani to‘xtatish';
+  } catch (e) {
+    musicBtn.textContent = '♫ Musiqani yoqish';
+  }
+});
 musicBtn.addEventListener('click',async()=>{
  if(audio.paused){try{await audio.play();musicBtn.textContent='♫ Musiqani to‘xtatish';}catch(e){alert('Musiqa fayli topilmadi. Papkaga ruxsatli music.mp3 faylini qo‘shing.');}}
  else{audio.pause();musicBtn.textContent='♫ Musiqani yoqish';}
